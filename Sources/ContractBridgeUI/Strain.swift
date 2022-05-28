@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 import ContractBridge
 
+
 public extension Strain {
-    public var color: SwiftUI.Color {
+    var color: SwiftUI.Color {
         switch self {
         case .noTrump: return .black
         default:       return Suit(rawValue: self.rawValue)!.color

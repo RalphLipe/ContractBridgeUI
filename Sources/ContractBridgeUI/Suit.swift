@@ -6,11 +6,12 @@
 //
 
 import Foundation
-import ContractBridge
 import SwiftUI
+import ContractBridge
+
 
 public extension Suit {
-    public var color: SwiftUI.Color {
+    var color: SwiftUI.Color {
         switch self {
         case .clubs, .spades:    return .black
         case .hearts, .diamonds: return .red
