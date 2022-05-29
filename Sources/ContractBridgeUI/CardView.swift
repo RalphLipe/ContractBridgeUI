@@ -11,6 +11,7 @@ import ContractBridge
 
 struct CardView: View {
     var card: Card
+    var action: ((Card) -> Void)? = nil
     var rankOnly = false
     
     var body: some View {
