@@ -10,6 +10,14 @@ import ContractBridge
 
 struct PBNGameView: View {
     var pbnGame: PBNGame
+    @State var deal: Deal
+    
+    init(pbnGame: PBNGame) {
+        let deal = pbnGame.deal ?? Deal()
+        self.pbnGame = pbnGame
+        self._deal = State(initialValue: deal)
+    }
+    
     var body: some View {
         VStack {
             if let event = pbnGame.event, !event.isEmpty {
@@ -29,8 +37,8 @@ struct PBNGameView: View {
                 let v = "Vulnerable: \(vulnerable)"
                 Text(v)
             }
-            if let deal = pbnGame.deal {
-                DealView(deal: deal, players: pbnGame.players, showPoints: true)
+            if pbnGame.deal != nil {
+                DealView(deal: $deal, players: pbnGame.players)
             }
             if let scoring = pbnGame.scoring {
                 Text("Scoring: \(scoring)")

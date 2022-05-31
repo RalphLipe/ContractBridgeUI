@@ -9,15 +9,16 @@ import SwiftUI
 import ContractBridge
 
 struct DealView: View {
-    var deal: Deal
+    @Binding var deal: Deal
     var players: [Position: String] = [:]
     var showPoints: Bool = false
+    var viewOption: CardSetViewOption = .symbolBySuit
 
     var body: some View {
         VStack {
-            HandView(hand: deal[.north], player: players[.north])
+            CardSetView(cards: $deal[.north],  viewOption: viewOption)
             HStack {
-                HandView(hand: deal[.west], player: players[.west])
+                CardSetView(cards: $deal[.west],  viewOption: viewOption)
                 Spacer()
                 if showPoints {
                     VStack {
@@ -26,23 +27,25 @@ struct DealView: View {
                             Text("\(deal[.west].highCardPoints)")
                             Spacer()
                             Text("\(deal[.east].highCardPoints)")
-                        }
+                        }.padding()
                         Text("\(deal[.south].highCardPoints)")
-                    }.padding()
+                    }.border(.gray).padding()
                     Spacer()
                 }
-                HandView(hand: deal[.east], player: players[.east])
+                CardSetView(cards: $deal[.east], viewOption: viewOption)
             }.padding()
-            HandView(hand: deal[.south], player: players[.south])
+            CardSetView(cards: $deal[.south], viewOption: viewOption)
         }
     }
 }
 
 struct DealView_Previews: PreviewProvider {
+    @State static var previewDeal = try! Deal(from: "S:A83.AT.AQT74.T72 Q74.KQ6.J9863.J4 J92.J742.K5.K965 KT65.9853.2.AQ83")
     static var previews: some View {
-        DealView(deal: try! Deal(from: "S:A83.AT.AQT74.T72 Q74.KQ6.J9863.J4 J92.J742.K5.K965 KT65.9853.2.AQ83"), showPoints: true)
-        DealView(deal: try! Deal(from: "S:A83.AT.AQT74.T72 Q74.KQ6.J9863.J4 J92.J742.K5.K965 KT65.9853.2.AQ83"),
+        DealView(deal: $previewDeal, showPoints: true)
+        DealView(deal: $previewDeal,
                  players: [.north: "Ralph", .east: "Holdon", .south: "Lynda", .west: "Marc"],
-                showPoints: false)
+                showPoints: false,
+                 viewOption: .images)
     }
 }

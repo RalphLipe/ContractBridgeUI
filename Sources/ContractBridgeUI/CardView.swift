@@ -8,21 +8,34 @@
 import SwiftUI
 import ContractBridge
 
+// TODO: Move to another file???
+public extension Card {
+    var image: Image {
+        let imageName = "\(rank.shortDescription)\(suit, style: .character)"
+        return Image(imageName, bundle: Bundle.module)
+    }
+}
 
-struct CardView: View {
-    var card: Card
-    var action: ((Card) -> Void)? = nil
-    var rankOnly = false
+public enum CardViewOption {
+    case image, rankAndSuit, rank
+}
+
+public struct CardView: View {
+    public var card: Card
+    public var action: ((Card) -> Void)? = nil
+    public var viewOption: CardViewOption = .image
     
-    var body: some View {
-        if rankOnly {
+    public var body: some View {
+        if viewOption == .rank {
             Text(card.rank.shortDescription)
-        } else {
+        } else if viewOption == .rankAndSuit {
             HStack {
                 let s = "\(card.suit)"
                 Text(card.rank.shortDescription) +
                 Text(s).foregroundColor(card.suit.color)
             }
+        } else {
+            card.image.resizable().scaledToFit().frame(width: 67.5, height: 105.0)
         }
     }
 }
@@ -32,6 +45,7 @@ struct CardView_Previews: PreviewProvider {
         VStack {
             CardView(card: Card(.ace, .spades))
             CardView(card: Card(.queen, .diamonds))
+            CardView(card: .fourOfClubs)
         }
         
     }
