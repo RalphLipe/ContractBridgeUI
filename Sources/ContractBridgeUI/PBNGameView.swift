@@ -78,9 +78,9 @@ struct PBNGameView: View {
     }
 }
 
-@available(macOS 12, *)
+
 struct PBNGameView_Previews: PreviewProvider {
-    public static var previewGame = PBNGame(event: "Monday afternoon pairs", site: "Eastside Bridge", date: Date.now, board: 1, players: [.north: "Ralph Lipe", .east: "David Johnson", .south: "Lynda Lipe", .west: "Fred Smith"], dealer: .west, vulnerable: [.ew], deal: try! Deal(from: "S:A83.AT.AQT74.T72 Q74.KQ6.J9863.J4 J92.J742.K5.K965 KT65.9853.2.AQ83"), scoring: "Matchpoints", declarer: .east, contract: Contract(level: 3, strain: .hearts, risk: .undoubled), result: 10, doubleDummyTricks: DoubleDummyTricks(from: "3321534215a9bc8aabc8"))
+    public static var previewGame = PBNGame(event: "Monday afternoon pairs", site: "Eastside Bridge", date: Date(), board: 1, players: [.north: "Ralph Lipe", .east: "David Johnson", .south: "Lynda Lipe", .west: "Fred Smith"], dealer: .west, vulnerable: [.ew], deal: try! Deal(from: "S:A83.AT.AQT74.T72 Q74.KQ6.J9863.J4 J92.J742.K5.K965 KT65.9853.2.AQ83"), scoring: "Matchpoints", declarer: .east, contract: Contract(level: 3, strain: .hearts, risk: .undoubled), result: 10, doubleDummyTricks: DoubleDummyTricks(from: "3321534215a9bc8aabc8"))
     
     static var previews: some View {
         PBNGameView(pbnGame: PBNGameView_Previews.previewGame)
