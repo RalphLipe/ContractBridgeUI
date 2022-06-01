@@ -39,7 +39,7 @@ public struct CardSetView: View {
         self.viewOption = viewOption
     }
 
-    private static let cardOffset = 12.0
+    private static let cardOffset = 15.0
     
     public var body: some View {
         switch viewOption {
