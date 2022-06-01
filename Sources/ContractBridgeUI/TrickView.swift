@@ -22,7 +22,11 @@ struct PlayPositionView: View {
 }
 
 public struct TrickView: View {
-    @Binding var trick: Trick?
+    @Binding public var trick: Trick?
+    
+    public init(trick: Binding<Trick?>) {
+        self._trick = trick
+    }
     
     private func playPosition(_ position: Position, edge: Edge) -> some View {
         var card: Card? = nil
