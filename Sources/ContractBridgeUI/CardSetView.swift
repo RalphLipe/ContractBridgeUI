@@ -14,21 +14,21 @@ public enum CardSetViewOption {
     case images, symbolBySuit, symbolOnly(suit: Suit? = nil)
 }
 
-struct CardSetStaticView: View {
+public struct CardSetStaticView: View {
     @State private var cards: Set<Card>
     private let viewOption: CardSetViewOption
     
-    init(cards: Set<Card>, viewOption: CardSetViewOption = .images) {
+    public init(cards: Set<Card>, viewOption: CardSetViewOption = .images) {
         self.cards = cards
         self.viewOption = viewOption
     }
     
-    var body: some View {
+    public var body: some View {
         CardSetView(cards: $cards, viewOption: viewOption)
     }
 }
 
-struct CardSetView: View {
+public struct CardSetView: View {
     @Binding var cards: Set<Card>
     var action: ((Card) -> Void)? = nil
     var viewOption: CardSetViewOption = .images
@@ -41,7 +41,7 @@ struct CardSetView: View {
 
     private static let cardOffset = 12.0
     
-    var body: some View {
+    public var body: some View {
         switch viewOption {
         case .images:
             ZStack {
