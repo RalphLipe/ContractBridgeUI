@@ -26,6 +26,7 @@ public struct CardView: View {
     public var viewOption: CardViewOption = .image
     
     public var body: some View {
+        // TODO:  Need to make buttons or tap gestures for text cards...
         if viewOption == .rank {
             Text(card.rank.shortDescription)
         } else if viewOption == .rankAndSuit {
@@ -35,9 +36,14 @@ public struct CardView: View {
                 Text(s).foregroundColor(card.suit.color)
             }
         } else {
-            card.image.resizable().scaledToFit().frame(width: 67.5, height: 105.0)
+            if let action = action {
+                card.image.resizable().scaledToFit().frame(width: 67.5, height: 105.0).gesture(TapGesture().onEnded { action(card) })
+            } else {
+                card.image.resizable().scaledToFit().frame(width: 67.5, height: 105.0)
+            }
         }
     }
+    
 }
 
 struct CardView_Previews: PreviewProvider {

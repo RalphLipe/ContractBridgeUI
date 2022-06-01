@@ -8,6 +8,7 @@
 import SwiftUI
 import ContractBridge
 
+
 struct DealView: View {
     @Binding var deal: Deal
     var players: [Position: String] = [:]

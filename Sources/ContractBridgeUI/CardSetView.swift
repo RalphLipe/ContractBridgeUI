@@ -14,21 +14,31 @@ public enum CardSetViewOption {
     case images, symbolBySuit, symbolOnly(suit: Suit? = nil)
 }
 
+struct CardSetStaticView: View {
+    @State private var cards: Set<Card>
+    private let viewOption: CardSetViewOption
+    
+    init(cards: Set<Card>, viewOption: CardSetViewOption = .images) {
+        self.cards = cards
+        self.viewOption = viewOption
+    }
+    
+    var body: some View {
+        CardSetView(cards: $cards, viewOption: viewOption)
+    }
+}
+
 struct CardSetView: View {
     @Binding var cards: Set<Card>
     var action: ((Card) -> Void)? = nil
     var viewOption: CardSetViewOption = .images
     
-/*
-    public init(hand: Binding<Set<Card>>, position: Position, action: @escaping (Card) -> Void = {_ in }) {
-        self._cards = Binding(projectedValue: hand)
+    public init(cards: Binding<Set<Card>>, action: ((Card) -> Void)? = nil, viewOption: CardSetViewOption = .images) {
+        self._cards = cards
         self.action = action
+        self.viewOption = viewOption
     }
-  */
-    
-  //  public func remove(card: Card)  {
-  //      _ = self.cards.remove(card)
-  //  }
+
     private static let cardOffset = 12.0
     
     var body: some View {
@@ -44,9 +54,6 @@ struct CardSetView: View {
 
         case .symbolBySuit:
             VStack(alignment: .leading) {
-               // if let player = player {
-               //     Text(player)
-               // }
                 ForEach ([Suit.spades, Suit.hearts, Suit.diamonds, Suit.clubs], id: \.self) {
                     suit in
                     CardSetView(cards: $cards, viewOption: .symbolOnly(suit: suit)).font(.system(size: 14, design: .monospaced))
@@ -72,30 +79,6 @@ struct CardSetView: View {
 }
 
 
-/*
-
-struct CardSetView: View {
-    @State var cards: [Card]
-    var suit: Suit? = nil
-    
-    init(cards: Set<Card>, suit: Suit? = nil) {
-        self.suit = suit
-        self.cards = cards.sortedHandOrder(suit: suit)
-    }
-    
-    var body: some View {
-        HStack {
-            if let suit = suit {
-                let s = "\(suit)"
-                Text(s).foregroundColor(suit.color)
-            }
-            ForEach(cards, id: \.self) { card in
-                CardView(card: card, viewOption: (suit == nil) ? .rankAndSuit : .rank)
-            }
-        }
-    }
-}
-*/
 
 struct CardSet_Previews: PreviewProvider {
     @State static var previewHand: Set<Card> = [.aceOfSpades, .kingOfSpades, .queenOfHearts, .tenOfHearts, .fiveOfHearts, .sevenOfHearts, .fourOfDiamonds, .threeOfDiamonds, .nineOfClubs, .eightOfClubs, .sevenOfClubs, .sixOfClubs, .fiveOfClubs]
@@ -104,5 +87,6 @@ struct CardSet_Previews: PreviewProvider {
         CardSetView(cards: $previewHand, viewOption: .symbolBySuit)
         CardSetView(cards: $previewHand, viewOption: .symbolOnly(suit: nil))
         CardSetView(cards: $previewHand, viewOption: .symbolOnly(suit: .hearts))
+        CardSetStaticView(cards: [.kingOfHearts, .queenOfSpades])
     }
 }
