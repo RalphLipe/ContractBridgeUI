@@ -21,7 +21,7 @@ struct PlayPositionView: View {
     }
 }
 
-struct TrickView: View {
+public struct TrickView: View {
     @Binding var trick: Trick?
     
     private func playPosition(_ position: Position, edge: Edge) -> some View {
@@ -30,7 +30,7 @@ struct TrickView: View {
         return PlayPositionView(card: card, edge: edge)
     }
     
-    var body: some View {
+    public var body: some View {
         withAnimation(.easeIn) {
             HStack {
                 playPosition(.west, edge: .leading)
