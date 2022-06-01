@@ -22,8 +22,15 @@ public enum CardViewOption {
 
 public struct CardView: View {
     public var card: Card
-    public var action: ((Card) -> Void)? = nil
-    public var viewOption: CardViewOption = .image
+    public var action: ((Card) -> Void)?
+    public var viewOption: CardViewOption
+    
+    
+    public init(card: Card, action: ((Card) -> Void)? = nil , viewOption: CardViewOption = .image) {
+        self.card = card
+        self.action = action
+        self.viewOption = viewOption
+    }
     
     public var body: some View {
         // TODO:  Need to make buttons or tap gestures for text cards...
