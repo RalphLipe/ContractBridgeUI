@@ -44,9 +44,9 @@ public struct CardView: View {
             }
         } else {
             if let action = action {
-                card.image.resizable().scaledToFit().frame(width: 67.5, height: 105.0).gesture(TapGesture().onEnded { action(card) })
+                card.image.resizable().scaledToFit().frame(width: 84.375, height: 131.25).gesture(TapGesture().onEnded { action(card) })
             } else {
-                card.image.resizable().scaledToFit().frame(width: 67.5, height: 105.0)
+                card.image.resizable().scaledToFit().frame(width: 84.375, height: 131.25)
             }
         }
     }

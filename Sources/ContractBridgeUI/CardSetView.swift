@@ -39,7 +39,7 @@ public struct CardSetView: View {
         self.viewOption = viewOption
     }
 
-    private static let cardOffset = 15.0
+    private static let cardOffset = 19.0
     
     public var body: some View {
         switch viewOption {
@@ -50,7 +50,7 @@ public struct CardSetView: View {
                 ForEach(0..<sortedCards.count, id: \.self) { index in
                     CardView(card: sortedCards[index], action: action).offset(x:  (midpoint - CGFloat(index)) * -Self.cardOffset, y: 0)
                 }
-            }.frame(minWidth: 67.5 + (Double(cards.count - 1) * Self.cardOffset)).animation(.easeInOut)
+            }.frame(minWidth: 84.375 + (Double(cards.count - 1) * Self.cardOffset)).animation(.easeInOut)
 
         case .symbolBySuit:
             VStack(alignment: .leading) {
