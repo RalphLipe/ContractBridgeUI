@@ -11,7 +11,7 @@ import ContractBridge
 // TODO: Move to another file???
 public extension Card {
     var image: Image {
-        let imageName = "\(rank.shortDescription)\(suit, style: .character)"
+        let imageName = "\(rank, style: .character)\(suit, style: .character)"
         return Image(imageName, bundle: Bundle.module)
     }
 }
@@ -35,12 +35,14 @@ public struct CardView: View {
     public var body: some View {
         // TODO:  Need to make buttons or tap gestures for text cards...
         if viewOption == .rank {
-            Text(card.rank.shortDescription)
+            let rankText = "\(card.rank)"
+            Text(rankText)
         } else if viewOption == .rankAndSuit {
             HStack {
-                let s = "\(card.suit)"
-                Text(card.rank.shortDescription) +
-                Text(s).foregroundColor(card.suit.color)
+                let suitText = "\(card.suit)"
+                let rankText = "\(card.rank)"
+                Text(rankText) +
+                Text(suitText).foregroundColor(card.suit.color)
             }
         } else {
             if let action = action {

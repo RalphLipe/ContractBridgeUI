@@ -38,7 +38,7 @@ struct PBNGameView: View {
                 Text(v)
             }
             if pbnGame.deal != nil {
-                DealView(deal: $deal, players: pbnGame.players)
+                HandsView(hands: $deal.hands, players: pbnGame.players)
             }
             if let scoring = pbnGame.scoring {
                 Text("Scoring: \(scoring)")

@@ -1,6 +1,5 @@
 //
-//  DealView.swift
-//  PBNView
+//  HandsView.swift
 //
 //  Created by Ralph Lipe on 2/13/22.
 //
@@ -8,43 +7,42 @@
 import SwiftUI
 import ContractBridge
 
-
-struct DealView: View {
-    @Binding var deal: Deal
+struct HandsView: View {
+    @Binding var hands: Hands
     var players: [Position: String] = [:]
     var showPoints: Bool = false
     var viewOption: CardSetViewOption = .symbolBySuit
 
     var body: some View {
         VStack {
-            CardSetView(cards: $deal[.north],  viewOption: viewOption)
+            CardSetView(cards: $hands[.north],  viewOption: viewOption)
             HStack {
-                CardSetView(cards: $deal[.west],  viewOption: viewOption)
+                CardSetView(cards: $hands[.west],  viewOption: viewOption)
                 Spacer()
                 if showPoints {
                     VStack {
-                        Text("\(deal[.north].highCardPoints)")
+                        Text("\(hands[.north].highCardPoints)")
                         HStack {
-                            Text("\(deal[.west].highCardPoints)")
+                            Text("\(hands[.west].highCardPoints)")
                             Spacer()
-                            Text("\(deal[.east].highCardPoints)")
+                            Text("\(hands[.east].highCardPoints)")
                         }.padding()
-                        Text("\(deal[.south].highCardPoints)")
+                        Text("\(hands[.south].highCardPoints)")
                     }.border(.gray).padding()
                     Spacer()
                 }
-                CardSetView(cards: $deal[.east], viewOption: viewOption)
+                CardSetView(cards: $hands[.east], viewOption: viewOption)
             }.padding()
-            CardSetView(cards: $deal[.south], viewOption: viewOption)
+            CardSetView(cards: $hands[.south], viewOption: viewOption)
         }
     }
 }
 
-struct DealView_Previews: PreviewProvider {
+struct HandsView_Previews: PreviewProvider {
     @State static var previewDeal = try! Deal(from: "S:A83.AT.AQT74.T72 Q74.KQ6.J9863.J4 J92.J742.K5.K965 KT65.9853.2.AQ83")
     static var previews: some View {
-        DealView(deal: $previewDeal, showPoints: true)
-        DealView(deal: $previewDeal,
+        HandsView(hands: $previewDeal.hands, showPoints: true)
+        HandsView(hands: $previewDeal.hands,
                  players: [.north: "Ralph", .east: "Holdon", .south: "Lynda", .west: "Marc"],
                 showPoints: false,
                  viewOption: .images)

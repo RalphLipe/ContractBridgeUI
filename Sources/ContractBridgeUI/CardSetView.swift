@@ -10,6 +10,43 @@ import ContractBridge
 
 
 
+public extension Suit {
+    var isBlack: Bool {
+        return self == .spades || self == .clubs
+    }
+}
+
+
+public extension Set where Element == Card {
+    var suits: Set<Suit> {
+        var suits = Set<Suit>()
+        forEach { suits.insert($0.suit) }
+        return suits
+    }
+    
+    func sortBlackRed(firstSuit: Suit? = nil) -> [Card] {
+        var remainingSuits = suits
+        var sortOrder: [Suit] = [.spades, .hearts, .clubs, .diamonds]
+        var cards = Array(self)
+        if suits.count == Suit.allCases.count {
+            if let firstSuit = firstSuit, firstSuit != .spades {
+                if firstSuit == .hearts {
+                    sortOrder = [.hearts, .spades, .diamonds, .clubs]
+                } else if firstSuit == .diamonds {
+                    sortOrder = [.diamonds, .spades, .hearts, .clubs]
+                } else {
+                    assert(firstSuit == .clubs)
+                    sortOrder = [.clubs, .hearts, .spades, .diamonds]
+                }
+            }
+        }
+        // TODO:  Work with just 1, 2 or 3 suits!...
+        cards.sort { ($0.suit == $1.suit && $0.rank > $1.rank ) || sortOrder.firstIndex(of: $0.suit)! < sortOrder.firstIndex(of: $1.suit)!}
+        return cards
+    }
+}
+
+
 public enum CardSetViewOption {
     case images, symbolBySuit, symbolOnly(suit: Suit? = nil)
 }
@@ -46,7 +83,7 @@ public struct CardSetView: View {
         case .images:
             ZStack {
                 let midpoint: CGFloat = CGFloat(cards.count - 1) / 2.0
-                let sortedCards = cards.sortedHandOrder()
+                let sortedCards = cards.sortBlackRed()
                 ForEach(0..<sortedCards.count, id: \.self) { index in
                     CardView(card: sortedCards[index], action: action).offset(x:  (midpoint - CGFloat(index)) * -Self.cardOffset, y: 0)
                 }

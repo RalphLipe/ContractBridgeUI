@@ -24,19 +24,22 @@ struct DoubleDummyTricksView: View {
     
     func makingTricks(_ a: Int, _ b: Int, _ strain: Strain) -> Text {
         let tricks = (a == b) ? "\(a-6)" : "\(a-6)/\(b-6)"
+        let strainString = "\(strain, style: .symbol)"
         return Text(tricks) +
-            Text(strain.shortDescription).foregroundColor(strain.color)
+            Text(strainString).foregroundColor(strain.color)
     }
     
     func underTricks(_ a: Int, _ b: Int, _ strain: Strain) -> Text {
         let tricks = (a == b) ? "\(a)" : "\(a)/\(b)"
-        return Text(strain.shortDescription).foregroundColor(.blue) +
+        let strainString = "\(strain)"
+        return Text(strainString).foregroundColor(.blue) +
             Text(tricks).foregroundColor(.blue)
     }
 
     var body: some View {
         HStack {
-            Text(self.pair.shortDescription)
+            let pairDescription = "\(pair)"
+            Text(pairDescription)
             ForEach (Strain.allCases, id: \.self) { strain in
                 if let a = tricks0[strain],
                    let b = tricks1[strain] {
