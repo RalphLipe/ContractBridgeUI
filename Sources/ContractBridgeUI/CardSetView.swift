@@ -48,14 +48,14 @@ public extension Set where Element == Card {
 
 
 public enum CardSetViewOption {
-    case images, symbolBySuit, symbolOnly(suit: Suit? = nil)
+    case images(horizontal: Bool = true), symbolBySuit, symbolOnly(suit: Suit? = nil)
 }
 
 public struct CardSetStaticView: View {
     @State private var cards: Set<Card>
     private let viewOption: CardSetViewOption
     
-    public init(cards: Set<Card>, viewOption: CardSetViewOption = .images) {
+    public init(cards: Set<Card>, viewOption: CardSetViewOption = .images()) {
         self.cards = cards
         self.viewOption = viewOption
     }
@@ -68,26 +68,29 @@ public struct CardSetStaticView: View {
 public struct CardSetView: View {
     @Binding var cards: Set<Card>
     var action: ((Card) -> Void)? = nil
-    var viewOption: CardSetViewOption = .images
+    var viewOption: CardSetViewOption = .images()
     
-    public init(cards: Binding<Set<Card>>, action: ((Card) -> Void)? = nil, viewOption: CardSetViewOption = .images) {
+    public init(cards: Binding<Set<Card>>, action: ((Card) -> Void)? = nil, viewOption: CardSetViewOption = .images()) {
         self._cards = cards
         self.action = action
         self.viewOption = viewOption
     }
 
-    private static let cardOffset = 19.0
+    private static let xOffset = 19.0
+    private static let yOffset = 26.0
     
     public var body: some View {
         switch viewOption {
-        case .images:
+        case .images(let horizontal):
+            let xOffset = horizontal ? Self.xOffset : 0.0
+            let yOffset = horizontal ? 0.0 : Self.yOffset
             ZStack {
                 let midpoint: CGFloat = CGFloat(cards.count - 1) / 2.0
                 let sortedCards = cards.sortBlackRed()
                 ForEach(0..<sortedCards.count, id: \.self) { index in
-                    CardView(card: sortedCards[index], action: action).offset(x:  (midpoint - CGFloat(index)) * -Self.cardOffset, y: 0)
+                    CardView(card: sortedCards[index], action: action).offset(x:  (midpoint - CGFloat(index)) * -xOffset, y: (midpoint - CGFloat(index)) * -yOffset)
                 }
-            }.frame(minWidth: 84.375 + (Double(cards.count - 1) * Self.cardOffset)).animation(.easeInOut)
+            }.frame(minWidth: 84.375 + (Double(cards.count - 1) * xOffset), minHeight: 131.25 + (Double(cards.count - 1) * yOffset)).animation(.easeInOut)
 
         case .symbolBySuit:
             VStack(alignment: .leading) {
@@ -97,7 +100,7 @@ public struct CardSetView: View {
                 }
             }
             
-        case let .symbolOnly(suit):
+        case .symbolOnly(let suit):
             HStack {
                 if let suit = suit {
                     let s = "\(suit, style: .symbol)"
@@ -120,7 +123,8 @@ public struct CardSetView: View {
 struct CardSet_Previews: PreviewProvider {
     @State static var previewHand: Set<Card> = [.aceOfSpades, .kingOfSpades, .queenOfHearts, .tenOfHearts, .fiveOfHearts, .sevenOfHearts, .fourOfDiamonds, .threeOfDiamonds, .nineOfClubs, .eightOfClubs, .sevenOfClubs, .sixOfClubs, .fiveOfClubs]
     static var previews: some View {
-        CardSetView(cards: $previewHand, viewOption: .images)
+        CardSetView(cards: $previewHand, viewOption: .images())
+        CardSetView(cards: $previewHand, viewOption: .images(horizontal: false))
         CardSetView(cards: $previewHand, viewOption: .symbolBySuit)
         CardSetView(cards: $previewHand, viewOption: .symbolOnly(suit: nil))
         CardSetView(cards: $previewHand, viewOption: .symbolOnly(suit: .hearts))

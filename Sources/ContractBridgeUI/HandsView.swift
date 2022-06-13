@@ -45,6 +45,6 @@ struct HandsView_Previews: PreviewProvider {
         HandsView(hands: $previewDeal.hands,
                  players: [.north: "Ralph", .east: "Holdon", .south: "Lynda", .west: "Marc"],
                 showPoints: false,
-                 viewOption: .images)
+                 viewOption: .images())
     }
 }
