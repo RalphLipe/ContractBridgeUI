@@ -69,6 +69,7 @@ public struct CardSetView: View {
     @Binding var cards: Set<Card>
     var action: ((Card) -> Void)? = nil
     var viewOption: CardSetViewOption = .images()
+    @Environment(\.cardScale) var cardScale: CGFloat
     
     public init(cards: Binding<Set<Card>>, action: ((Card) -> Void)? = nil, viewOption: CardSetViewOption = .images()) {
         self._cards = cards
@@ -76,21 +77,21 @@ public struct CardSetView: View {
         self.viewOption = viewOption
     }
 
-    private static let xOffset = 19.0
-    private static let yOffset = 26.0
+    private static let xOffset = 0.21
+    private static let yOffset = 0.25
     
     public var body: some View {
         switch viewOption {
         case .images(let horizontal):
-            let xOffset = horizontal ? Self.xOffset : 0.0
-            let yOffset = horizontal ? 0.0 : Self.yOffset
+            let xOffset = horizontal ? Self.xOffset * Card.width * cardScale : 0.0
+            let yOffset = horizontal ? 0.0 : Self.yOffset * Card.height * cardScale
             ZStack {
                 let midpoint: CGFloat = CGFloat(cards.count - 1) / 2.0
                 let sortedCards = cards.sortBlackRed()
                 ForEach(0..<sortedCards.count, id: \.self) { index in
                     CardView(card: sortedCards[index], action: action).offset(x:  (midpoint - CGFloat(index)) * -xOffset, y: (midpoint - CGFloat(index)) * -yOffset)
                 }
-            }.frame(minWidth: 84.375 + (Double(cards.count - 1) * xOffset), minHeight: 131.25 + (Double(cards.count - 1) * yOffset)).animation(.easeInOut)
+            }.frame(minWidth: Card.width * cardScale + (Double(cards.count - 1) * xOffset), minHeight: Card.height * cardScale + (Double(cards.count - 1) * yOffset)).animation(.easeInOut)
 
         case .symbolBySuit:
             VStack(alignment: .leading) {
@@ -123,7 +124,7 @@ public struct CardSetView: View {
 struct CardSet_Previews: PreviewProvider {
     @State static var previewHand: Set<Card> = [.aceOfSpades, .kingOfSpades, .queenOfHearts, .tenOfHearts, .fiveOfHearts, .sevenOfHearts, .fourOfDiamonds, .threeOfDiamonds, .nineOfClubs, .eightOfClubs, .sevenOfClubs, .sixOfClubs, .fiveOfClubs]
     static var previews: some View {
-        CardSetView(cards: $previewHand, viewOption: .images())
+        CardSetView(cards: $previewHand, viewOption: .images()).cardScale(0.15)
         CardSetView(cards: $previewHand, viewOption: .images(horizontal: false))
         CardSetView(cards: $previewHand, viewOption: .symbolBySuit)
         CardSetView(cards: $previewHand, viewOption: .symbolOnly(suit: nil))
