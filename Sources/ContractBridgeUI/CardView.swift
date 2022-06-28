@@ -31,7 +31,7 @@ extension EnvironmentValues {
 }
 
 
-extension View {
+public extension View {
     func cardScale(_ cardScale: CGFloat) -> some View {
         environment(\.cardScale, cardScale)
     }
