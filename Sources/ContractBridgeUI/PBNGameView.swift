@@ -8,7 +8,7 @@
 import SwiftUI
 import ContractBridge
 
-struct PBNGameView: View {
+public struct PBNGameView: View {
     var pbnGame: PBNGame
     @State var deal: Deal
     
@@ -18,7 +18,7 @@ struct PBNGameView: View {
         self._deal = State(initialValue: deal)
     }
     
-    var body: some View {
+    public var body: some View {
         VStack {
             if let event = pbnGame.event, !event.isEmpty {
                 Text(event)
