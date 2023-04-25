@@ -12,7 +12,7 @@ public struct PBNGameView: View {
     var pbnGame: PBNGame
     @State var deal: Deal
     
-    init(pbnGame: PBNGame) {
+    public init(pbnGame: PBNGame) {
         let deal = pbnGame.deal ?? Deal()
         self.pbnGame = pbnGame
         self._deal = State(initialValue: deal)

@@ -7,13 +7,13 @@
 import SwiftUI
 import ContractBridge
 
-struct HandsView: View {
+public struct HandsView: View {
     @Binding var hands: Hands
     var players: [Position: String] = [:]
     var showPoints: Bool = false
     var viewOption: CardSetViewOption = .symbolBySuit
 
-    var body: some View {
+    public var body: some View {
         VStack {
             CardSetView(cards: $hands[.north],  viewOption: viewOption)
             HStack {
