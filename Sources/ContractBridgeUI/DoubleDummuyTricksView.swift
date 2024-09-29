@@ -11,13 +11,13 @@ import ContractBridge
 
 
 struct DoubleDummyTricksView: View {
-    var pair: Pair
+    var pair: PairDirection
     var tricks0: [Strain : Int]
     var tricks1: [Strain : Int]
     
-    init(doubleDummyTricks: DoubleDummyTricks, pair: Pair) {
+    init(doubleDummyTricks: DoubleDummyTricks, pair: PairDirection) {
         self.pair = pair
-        let pos = pair.positions
+        let pos = pair.directions
         self.tricks0 = doubleDummyTricks[pos.0]
         self.tricks1 = doubleDummyTricks[pos.1]
     }

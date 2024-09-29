@@ -28,7 +28,7 @@ public struct TrickView: View {
         self._trick = trick
     }
     
-    private func playPosition(_ position: Position, edge: Edge) -> some View {
+    private func playPosition(_ position: Direction, edge: Edge) -> some View {
         var card: Card? = nil
         if let trick = self.trick { card = trick.cards[position] }
         return PlayPositionView(card: card, edge: edge)

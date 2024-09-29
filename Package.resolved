@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ContractBridge",
+        "repositoryURL": "https://github.com/RalphLipe/ContractBridge",
+        "state": {
+          "branch": "matchpoints",
+          "revision": "b9428d81bad5ee877d04a2d340fb2cb0d61aeef9",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

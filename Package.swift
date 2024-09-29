@@ -14,7 +14,7 @@ let package = Package(
             targets: ["ContractBridgeUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/RalphLipe/ContractBridge", .branch("main"))
+        .package(url: "https://github.com/RalphLipe/ContractBridge", .branch("matchpoints"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

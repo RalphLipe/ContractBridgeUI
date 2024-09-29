@@ -9,7 +9,7 @@ import ContractBridge
 
 struct HandsView: View {
     @Binding var hands: Hands
-    var players: [Position: String] = [:]
+    var players: [Direction: String] = [:]
     var showPoints: Bool = false
     var viewOption: CardSetViewOption = .symbolBySuit
 
